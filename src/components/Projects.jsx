@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, ArrowUpRight, FolderGit2 } from 'lucide-react';
+import { Tilt } from 'react-tilt';
 
 const projects = [
   {
@@ -37,6 +38,18 @@ const projects = [
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop"
   }
 ];
+
+const defaultTiltOptions = {
+    reverse:        false,
+    max:            5, 
+    perspective:    1000,
+    scale:          1.01,
+    speed:          1000,
+    transition:     true,
+    axis:           null,
+    reset:          true,
+    easing:         "cubic-bezier(.03,.98,.52,.99)",
+};
 
 const Projects = () => {
   return (
@@ -76,8 +89,8 @@ const ProjectRow = ({ project, index }) => {
             className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}
         >
             {/* Image Side */}
-            <div className="w-full lg:w-3/5 group">
-                <div className="relative rounded-3xl overflow-hidden aspect-video border border-white/10 bg-neutral-800">
+            <Tilt options={defaultTiltOptions} className="w-full lg:w-3/5 group">
+                <div className="relative rounded-3xl overflow-hidden aspect-video border border-white/10 bg-neutral-800 shadow-2xl shadow-black/50">
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
                     <img 
                         src={project.image} 
@@ -88,13 +101,13 @@ const ProjectRow = ({ project, index }) => {
                     {/* Floating Stats Badge */}
                     <div className="absolute bottom-6 left-6 z-20 flex gap-3">
                         {project.stats.map((stat, i) => (
-                            <div key={i} className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-medium text-white">
+                            <div key={i} className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-medium text-white shadow-lg">
                                 {stat}
                             </div>
                         ))}
                     </div>
                 </div>
-            </div>
+            </Tilt>
 
             {/* Content Side */}
             <div className="w-full lg:w-2/5 flex flex-col justify-center">
