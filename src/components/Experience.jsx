@@ -4,12 +4,14 @@ import { motion } from 'framer-motion';
 const Experience = () => {
   const experiences = [
     {
+      id: 1,
       company: "Medi-Caps University",
       role: "Student Researcher / Developer",
       period: "2022 - Present",
       description: "Leading research on AI-driven agricultural solutions. Secured government funding for hardware prototypes. Maintained top 5% academic standing."
     },
     {
+      id: 2,
       company: "GrafikGalore",
       role: "Founder & Lead Developer",
       period: "2024 - 2025",
@@ -30,7 +32,7 @@ const Experience = () => {
 
         {experiences.map((exp, index) => (
           <motion.div 
-            key={index}
+            key={exp.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Footer = () => {
   const [copied, setCopied] = useState(false);
-  const email = "pranshu.chourasia@example.com"; // Replace with real email if known, or prompt user
+  const email = "pranshu0983@gmail.com"; // Replace with real email if known, or prompt user
 
   const handleCopy = () => {
     navigator.clipboard.writeText(email);
