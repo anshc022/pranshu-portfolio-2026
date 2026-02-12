@@ -1,103 +1,129 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github, Tag } from 'lucide-react';
+import { Github, ArrowUpRight, FolderGit2 } from 'lucide-react';
 
 const projects = [
   {
+    id: 1,
     title: "GrafikGalore",
-    description: "A digital assets marketplace connecting creators. Scaled to 45k+ INR revenue. Built with modern web tech stack.",
-    tags: ["React", "Node.js", "Stripe", "MongoDB"],
-    link: "#",
+    category: "Marketplace / E-commerce",
+    description: "A complete digital asset marketplace built from scratch. Features secure payment gateways, vendor dashboards, and automated asset delivery.",
+    stats: ["45k+ INR Revenue", "300+ Users", "MERN Stack"],
+    tech: ["React", "Node.js", "Stripe", "MongoDB"],
     github: "#",
-    color: "from-purple-500 to-indigo-500",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop" // Placeholder
+    color: "bg-purple-500",
+    image: "https://images.unsplash.com/photo-1614064641938-3bcee5297c1d?q=80&w=2670&auto=format&fit=crop"
   },
   {
+    id: 2,
     title: "Smart Corn Sorter",
-    description: "IoT-based agricultural sorting solution. Won ₹5,500 grant from NIDHI Prayas. Uses computer vision for quality control.",
-    tags: ["Python", "OpenCV", "IoT", "Raspberry Pi"],
-    link: "#",
+    category: "Hardware / IoT / AI",
+    description: "Government-funded IoT solution for agricultural quality control. Uses Computer Vision (OpenCV) to detect defects in real-time and actuate mechanical sorters.",
+    stats: ["$5,500 Grant", "NIDHI Prayas", "Hardware Prototype"],
+    tech: ["Python", "OpenCV", "Raspberry Pi", "IoT"],
     github: "#",
-    color: "from-yellow-400 to-orange-500",
-    image: "https://images.unsplash.com/photo-1551726194-279883505c86?q=80&w=2670&auto=format&fit=crop" // Placeholder
+    color: "bg-yellow-500",
+    image: "https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?q=80&w=2670&auto=format&fit=crop"
   },
   {
+    id: 3,
     title: "TrackMine",
-    description: "Advanced tracking and analytics dashboard for mining operations. Focuses on efficiency and safety metrics.",
-    tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
-    link: "#",
+    category: "Enterprise Dashboard",
+    description: "Safety and efficiency analytics dashboard for mining operations. Visualizes complex datasets to prevent accidents and optimize machinery usage.",
+    stats: ["Real-time Data", "Next.js", "Enterprise Grade"],
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
     github: "#",
-    color: "from-emerald-500 to-teal-500",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop" // Placeholder
+    color: "bg-emerald-500",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop"
   }
 ];
 
 const Projects = () => {
   return (
-    <section id="projects">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-        <div>
-          <h2 className="text-4xl font-display font-bold mb-4">Featured Work</h2>
-          <p className="text-muted-foreground text-lg max-w-xl">
-            A selection of projects that demonstrate my ability to ship products, solve hardware problems, and build scalable software.
-          </p>
+    <section id="projects" className="py-24 bg-neutral-900/30">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Selected Works</h2>
+            <p className="text-neutral-400 text-lg max-w-xl">
+                A showcase of technical depth and product thinking.
+            </p>
+            </div>
+            <a href="https://github.com/anshc022" className="text-white border-b border-white/30 hover:border-white pb-1 transition-colors flex items-center gap-2">
+                View GitHub <ArrowUpRight className="w-4 h-4" />
+            </a>
         </div>
-        <a href="https://github.com/anshc022" target="_blank" rel="noreferrer" className="text-primary font-medium hover:underline flex items-center gap-2">
-          View all on GitHub <ExternalLink className="w-4 h-4" />
-        </a>
-      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} index={index} />
-        ))}
+        <div className="space-y-32">
+          {projects.map((project, index) => (
+            <ProjectRow key={project.id} project={project} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-const ProjectCard = ({ project, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="group relative bg-card rounded-3xl overflow-hidden border border-border flex flex-col h-full"
-    >
-      {/* Image / Gradient Header */}
-      <div className="h-48 overflow-hidden relative">
-        <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-20 group-hover:opacity-30 transition-opacity z-10`} />
-        <img 
-          src={project.image} 
-          alt={project.title} 
-          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 filter grayscale group-hover:grayscale-0"
-        />
-      </div>
+const ProjectRow = ({ project, index }) => {
+    const isEven = index % 2 === 0;
 
-      <div className="p-6 flex flex-col flex-grow">
-        <h3 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
-        <p className="text-muted-foreground mb-6 flex-grow">{project.description}</p>
-        
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tags.map(tag => (
-            <span key={tag} className="text-xs px-2.5 py-1 bg-secondary rounded-md font-medium text-secondary-foreground flex items-center gap-1">
-              <Tag className="w-3 h-3" /> {tag}
-            </span>
-          ))}
-        </div>
+    return (
+        <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
+            className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center`}
+        >
+            {/* Image Side */}
+            <div className="w-full lg:w-3/5 group">
+                <div className="relative rounded-3xl overflow-hidden aspect-video border border-white/10 bg-neutral-800">
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                    <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out grayscale group-hover:grayscale-0"
+                    />
+                    
+                    {/* Floating Stats Badge */}
+                    <div className="absolute bottom-6 left-6 z-20 flex gap-3">
+                        {project.stats.map((stat, i) => (
+                            <div key={i} className="px-3 py-1.5 bg-black/60 backdrop-blur-md rounded-full border border-white/10 text-xs font-medium text-white">
+                                {stat}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
 
-        <div className="flex items-center gap-4 mt-auto">
-          {/* <a href={project.link} className="flex-1 bg-primary text-primary-foreground py-2.5 rounded-xl font-medium text-center hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-            Live Demo <ExternalLink className="w-4 h-4" />
-          </a> */}
-          <a href={project.github} className="flex-1 bg-secondary hover:bg-secondary/80 text-secondary-foreground py-2.5 rounded-xl font-medium text-center transition-colors flex items-center justify-center gap-2 border border-border">
-            <Github className="w-4 h-4" /> Source
-          </a>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+            {/* Content Side */}
+            <div className="w-full lg:w-2/5 flex flex-col justify-center">
+                <div className="flex items-center gap-3 mb-4">
+                    <span className={`w-2 h-2 rounded-full ${project.color}`} />
+                    <span className="text-sm font-mono text-neutral-400 uppercase tracking-widest">{project.category}</span>
+                </div>
+                
+                <h3 className="text-4xl font-bold text-white mb-6">{project.title}</h3>
+                <p className="text-neutral-400 text-lg leading-relaxed mb-8">
+                    {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-10">
+                    {project.tech.map((t) => (
+                        <span key={t} className="text-sm text-neutral-300 px-3 py-1 rounded-md bg-white/5 border border-white/5">
+                            {t}
+                        </span>
+                    ))}
+                </div>
+
+                <div className="flex gap-4">
+                    <a href={project.github} className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-neutral-200 transition-colors flex items-center gap-2">
+                        <Github className="w-5 h-5" /> Source Code
+                    </a>
+                </div>
+            </div>
+        </motion.div>
+    )
+}
 
 export default Projects;

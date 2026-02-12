@@ -1,51 +1,60 @@
 import React from 'react';
-import { Mail, ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Mail, Linkedin, Github, Twitter } from 'lucide-react';
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/5 -z-10 pointer-events-none" />
+    <section id="contact" className="py-32 relative overflow-hidden">
+        {/* Background Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="max-w-4xl mx-auto text-center px-4">
-            <h2 className="text-4xl md:text-6xl font-display font-bold mb-6">Let's build something extraordinary.</h2>
-            <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Whether you have a project in mind, a role to fill, or just want to chat about AI agents—I'm always open to new opportunities.
+        <div className="max-w-4xl mx-auto px-4 relative z-10 text-center">
+            <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-5xl md:text-7xl font-bold text-white mb-8 tracking-tight"
+            >
+                Let's Build Together
+            </motion.h2>
+            <p className="text-xl text-neutral-400 mb-12 max-w-2xl mx-auto">
+                Whether you have a project in mind, a question about my work, or just want to connect — I'm all ears.
             </p>
 
-            <a 
-                href="mailto:pranshu0983@gmail.com" 
-                className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-full text-lg font-semibold hover:opacity-90 transition-opacity"
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center gap-6"
             >
-                <Mail className="w-5 h-5" />
-                Say Hello
-            </a>
+                <a 
+                    href="mailto:pranshu0983@gmail.com" 
+                    className="px-10 py-5 bg-white text-black text-xl font-bold rounded-full hover:scale-105 hover:shadow-[0_0_40px_-5px_rgba(255,255,255,0.4)] transition-all duration-300"
+                >
+                    Say Hello
+                </a>
 
-            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
-                {[
-                    { label: "Email", value: "pranshu0983@gmail.com", href: "mailto:pranshu0983@gmail.com" },
-                    { label: "LinkedIn", value: "/in/pranshuchourasia", href: "https://linkedin.com/in/pranshuchourasia" },
-                    { label: "GitHub", value: "@anshc022", href: "https://github.com/anshc022" },
-                    { label: "Twitter", value: "@anshc022", href: "https://twitter.com/anshc022" },
-                ].map((item, i) => (
-                    <a 
-                        key={i} 
-                        href={item.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="p-4 rounded-2xl bg-secondary/50 hover:bg-secondary border border-border transition-colors group"
-                    >
-                        <div className="text-sm text-muted-foreground mb-1">{item.label}</div>
-                        <div className="font-medium flex items-center gap-1 group-hover:text-primary transition-colors">
-                            {item.value}
-                            <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                    </a>
-                ))}
-            </div>
+                <div className="flex gap-6 mt-8">
+                    <SocialIcon href="https://github.com/anshc022" icon={<Github />} label="GitHub" />
+                    <SocialIcon href="https://linkedin.com/in/pranshuchourasia" icon={<Linkedin />} label="LinkedIn" />
+                    <SocialIcon href="mailto:pranshu0983@gmail.com" icon={<Mail />} label="Email" />
+                </div>
+            </motion.div>
         </div>
     </section>
   );
 };
+
+const SocialIcon = ({ href, icon, label }) => (
+    <a 
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-4 rounded-full bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10 transition-all border border-white/5"
+        aria-label={label}
+    >
+        {icon}
+    </a>
+);
 
 export default Contact;

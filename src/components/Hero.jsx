@@ -1,83 +1,103 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
 const Hero = () => {
+  const containerRef = useRef(null);
+  
+  // Mouse tracking for subtle parallax
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    setMousePosition({
+      x: (clientX / innerWidth - 0.5) * 20,
+      y: (clientY / innerHeight - 0.5) * 20,
+    });
+  };
+
   return (
-    <section id="hero" className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-      {/* Video Background Placeholder */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-background z-10" />
-        <div className="w-full h-full bg-neutral-900 flex items-center justify-center text-neutral-800 text-9xl font-bold opacity-20 select-none">
-          CREATE
-        </div>
-        {/* Replace with actual video tag later
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-          <source src="/path/to/video.mp4" type="video/mp4" />
-        </video>
-        */}
+    <section 
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black selection:bg-white/30"
+    >
+      {/* Background Gradients/Spotlights */}
+      <div className="absolute inset-0 w-full h-full bg-black pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/20 rounded-full blur-[120px] mix-blend-screen" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[120px] mix-blend-screen" />
       </div>
 
-      <div className="relative z-20 text-center max-w-4xl mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <div className="z-10 text-center space-y-8 px-4 relative">
+        {/* Available Badge */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mx-auto"
         >
-          <h2 className="text-xl md:text-2xl font-medium tracking-widest text-primary-foreground/80 mb-4 uppercase">
-            Pranshu Chourasia
-          </h2>
-          <h1 className="text-5xl md:text-8xl font-display font-bold text-white mb-6 leading-tight">
-            Building the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Future</span> of AI & Web
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Full-Stack AI Engineer turning complex problems into elegant, scalable solutions. 
-            From Smart Corn Sorters to SaaS platforms.
-          </p>
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span className="text-xs font-medium text-white/70 tracking-wide uppercase">Available for hire</span>
         </motion.div>
 
-        <motion.div
+        {/* Main Title */}
+        <motion.h1 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ x: mousePosition.x, y: mousePosition.y }}
+          className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40 leading-[1.1] sm:leading-tight"
+        >
+          Pranshu<br />Chourasia
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.4 }}
+          className="text-lg md:text-xl text-neutral-400 max-w-xl mx-auto font-light leading-relaxed"
+        >
+          Full Stack Engineer & Hardware Hacker. <br/>
+          Turning <span className="text-white font-medium">chaos</span> into <span className="text-white font-medium">structure</span>.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex items-center justify-center gap-6 mt-8"
         >
           <a 
             href="#projects" 
-            className="group relative px-8 py-4 bg-white text-black rounded-full font-semibold text-lg hover:bg-gray-100 transition-all flex items-center gap-2"
+            className="group relative px-8 py-3.5 rounded-full bg-white text-black font-semibold text-sm transition-transform active:scale-95 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)]"
           >
             View Work
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
-          <div className="flex items-center gap-4 mt-4 sm:mt-0">
-            <SocialLink href="https://github.com/anshc022" icon={<Github className="w-6 h-6" />} />
-            <SocialLink href="https://linkedin.com/in/pranshuchourasia" icon={<Linkedin className="w-6 h-6" />} />
-            <SocialLink href="mailto:pranshu0983@gmail.com" icon={<Mail className="w-6 h-6" />} />
-          </div>
+          <a 
+            href="mailto:pranshu0983@gmail.com"
+            className="group flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm font-medium"
+          >
+            Contact Me <ArrowUpRight className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
         </motion.div>
       </div>
-      
+
+      {/* Footer Text */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/50"
+        transition={{ delay: 1.5, duration: 1.5 }}
+        className="absolute bottom-8 text-neutral-600 text-xs tracking-[0.2em] uppercase font-mono"
       >
-        <span className="text-sm tracking-widest uppercase">Scroll</span>
+        Based in India • Global Reach
       </motion.div>
     </section>
   );
 };
-
-const SocialLink = ({ href, icon }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors backdrop-blur-sm border border-white/10"
-  >
-    {icon}
-  </a>
-);
 
 export default Hero;

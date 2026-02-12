@@ -1,108 +1,125 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Code2, Cpu, Trophy, Rocket, Globe, Zap } from 'lucide-react';
+import { Code2, Trophy, Zap, Rocket, Globe, Cpu, MapPin, Database, Layers } from 'lucide-react';
+
+const BentoCard = ({ children, className, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ duration: 0.5, delay }}
+    className={`glass-card rounded-3xl p-6 md:p-8 flex flex-col justify-between overflow-hidden relative group ${className}`}
+  >
+    <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+    {children}
+  </motion.div>
+);
 
 const About = () => {
   return (
-    <section id="about" className="relative">
-      <div className="mb-12">
-        <h2 className="text-4xl font-display font-bold mb-4">About & Stats</h2>
-        <p className="text-muted-foreground text-lg max-w-2xl">
-          I'm a developer who bridges the gap between academic research and real-world impact.
-          Here's a snapshot of my journey so far.
+    <section id="about" className="py-24 max-w-7xl mx-auto px-4 sm:px-6">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="mb-16"
+      >
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white tracking-tight">
+          Beyond the Code
+        </h2>
+        <p className="text-xl text-neutral-400 max-w-2xl leading-relaxed">
+          I don't just build apps; I engineer ecosystems. From hardware-integrated IoT solutions to high-scale decentralized web platforms.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(180px,auto)]">
-        {/* Main Bio - Spans 2 cols */}
-        <motion.div 
-          whileHover={{ scale: 1.01 }}
-          className="md:col-span-2 row-span-2 p-8 rounded-3xl bg-secondary/50 border border-border backdrop-blur-sm flex flex-col justify-between"
-        >
-          <div>
-            <div className="w-12 h-12 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 text-blue-500">
-              <Code2 className="w-6 h-6" />
+      <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-auto gap-4 md:gap-6">
+        
+        {/* Main Focus - Large Card */}
+        <BentoCard className="md:col-span-2 md:row-span-2 min-h-[400px]">
+          <div className="z-10">
+            <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mb-6 backdrop-blur-md border border-white/5">
+              <Cpu className="w-6 h-6 text-white" />
             </div>
-            <h3 className="text-2xl font-bold mb-4">Full Stack & AI Engineer</h3>
-            <p className="text-muted-foreground leading-relaxed text-lg">
-              I specialize in building scalable web applications and integrating cutting-edge AI models. 
-              My work ranges from decentralized platforms like <strong>OpenClaw</strong> to hardware-integrated solutions like the <strong>Smart Corn Sorter</strong>.
-              I don't just write code; I secure grants, win hackathons, and launch products.
+            <h3 className="text-3xl font-bold text-white mb-4">Full Stack & AI</h3>
+            <p className="text-neutral-400 text-lg leading-relaxed mb-6">
+              Specializing in the intersection of React, Python, and Edge AI. 
+              Currently exploring Multi-Agent Orchestration and Autonomous Web Navigation using <span className="text-white font-medium">OpenClaw</span>.
             </p>
+            <div className="flex flex-wrap gap-2 mt-auto">
+              {['React', 'Next.js', 'Python', 'Torch', 'AWS', 'Docker'].map((tech) => (
+                <span key={tech} className="px-3 py-1 bg-white/5 rounded-full text-xs font-mono text-neutral-300 border border-white/5">
+                  {tech}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {['React', 'Next.js', 'Python', 'TensorFlow', 'AWS', 'Docker'].map((tech) => (
-              <span key={tech} className="px-3 py-1 bg-background rounded-full text-sm font-medium border border-border">
-                {tech}
-              </span>
-            ))}
-          </div>
-        </motion.div>
+          <div className="absolute right-0 bottom-0 w-64 h-64 bg-gradient-to-tl from-purple-500/20 to-transparent blur-[80px]" />
+        </BentoCard>
 
-        {/* Stat 1: Grant */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="p-6 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex flex-col justify-center items-start"
-        >
-          <Trophy className="w-8 h-8 text-emerald-500 mb-4" />
-          <h4 className="text-4xl font-bold text-emerald-600 dark:text-emerald-400 mb-1">$5,500</h4>
-          <p className="text-sm font-medium text-emerald-700 dark:text-emerald-300">Grant Secured</p>
-          <p className="text-xs text-muted-foreground mt-2">NIDHI Prayas (DST, Govt of India)</p>
-        </motion.div>
-
-        {/* Stat 2: Revenue */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="p-6 rounded-3xl bg-purple-500/10 border border-purple-500/20 flex flex-col justify-center items-start"
-        >
-          <Zap className="w-8 h-8 text-purple-500 mb-4" />
-          <h4 className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-1">45k+</h4>
-          <p className="text-sm font-medium text-purple-700 dark:text-purple-300">Revenue Generated (INR)</p>
-          <p className="text-xs text-muted-foreground mt-2">Via GrafikGalore</p>
-        </motion.div>
-
-        {/* Stat 3: Hackathons */}
-        <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="p-6 rounded-3xl bg-orange-500/10 border border-orange-500/20 flex flex-col justify-center items-start"
-        >
-          <Rocket className="w-8 h-8 text-orange-500 mb-4" />
-          <h4 className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-1">Top 6</h4>
-          <p className="text-sm font-medium text-orange-700 dark:text-orange-300">Smart India Hackathon</p>
-          <p className="text-xs text-muted-foreground mt-2">Hardware Edition, 2024</p>
-        </motion.div>
-
-        {/* Focus Area */}
-        <motion.div 
-          whileHover={{ scale: 1.01 }}
-          className="md:col-span-2 p-8 rounded-3xl bg-secondary/30 border border-border flex items-center justify-between gap-8"
-        >
+        {/* Stats: Grant */}
+        <BentoCard className="md:col-span-1 min-h-[200px]" delay={0.1}>
           <div>
-            <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
-              <Globe className="w-5 h-5" />
-              Current Focus
-            </h3>
-            <p className="text-muted-foreground">
-              Building <strong>Agentic Workflows</strong> and <strong>Decentralized Systems</strong>. 
-              Currently exploring Multi-Agent Orchestration and Autonomous Web Navigation.
-            </p>
+            <Trophy className="w-8 h-8 text-emerald-400 mb-4" />
+            <h4 className="text-4xl font-bold text-white mb-1">$5,500</h4>
+            <p className="text-xs font-medium text-emerald-400/80 uppercase tracking-wider">Grant Secured</p>
+            <p className="text-xs text-neutral-500 mt-2">NIDHI Prayas (Govt of India)</p>
           </div>
-          <div className="hidden md:block w-24 h-24 bg-gradient-to-tr from-blue-500 to-cyan-400 rounded-full opacity-20 blur-xl"></div>
-        </motion.div>
+        </BentoCard>
 
-        {/* Education/Other */}
-         <motion.div 
-          whileHover={{ scale: 1.02 }}
-          className="p-6 rounded-3xl bg-secondary/50 border border-border flex flex-col justify-center"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <Cpu className="w-6 h-6" />
-            <h4 className="font-bold">Education</h4>
+        {/* Stats: Revenue */}
+        <BentoCard className="md:col-span-1 min-h-[200px]" delay={0.2}>
+          <div>
+            <Zap className="w-8 h-8 text-yellow-400 mb-4" />
+            <h4 className="text-4xl font-bold text-white mb-1">45k+</h4>
+            <p className="text-xs font-medium text-yellow-400/80 uppercase tracking-wider">Revenue (INR)</p>
+            <p className="text-xs text-neutral-500 mt-2">Bootstrapped Marketplace</p>
           </div>
-          <p className="text-sm font-medium">B.Tech in CSE</p>
-          <p className="text-xs text-muted-foreground">Medi-Caps University</p>
-          <p className="text-xs text-muted-foreground mt-1">2022 - 2026</p>
-        </motion.div>
+        </BentoCard>
+
+        {/* Location / Availability */}
+        <BentoCard className="md:col-span-1 min-h-[200px] justify-center items-center text-center" delay={0.3}>
+          <div className="relative w-full h-full flex flex-col items-center justify-center">
+             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=500&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay" />
+             <MapPin className="w-8 h-8 text-white mb-2 z-10" />
+             <h4 className="text-lg font-semibold text-white z-10">Indore, India</h4>
+             <p className="text-xs text-neutral-400 z-10">Remote Ready</p>
+          </div>
+        </BentoCard>
+
+        {/* Education */}
+        <BentoCard className="md:col-span-1 min-h-[200px]" delay={0.4}>
+          <div className="flex flex-col h-full justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-white/5 rounded-lg">
+                <Globe className="w-5 h-5 text-blue-400" />
+              </div>
+              <h4 className="font-semibold text-white">Education</h4>
+            </div>
+            <div>
+              <p className="text-sm text-white">B.Tech CSE</p>
+              <p className="text-xs text-neutral-500">Medi-Caps University</p>
+              <p className="text-xs text-neutral-600 mt-1">2022 - 2026</p>
+            </div>
+          </div>
+        </BentoCard>
+
+         {/* Hackathon */}
+         <BentoCard className="md:col-span-2 min-h-[180px] flex-row items-center gap-6" delay={0.5}>
+           <div className="flex-1">
+             <div className="flex items-center gap-2 mb-2">
+                <Rocket className="w-5 h-5 text-orange-500" />
+                <span className="text-xs font-bold text-orange-500 uppercase tracking-wider">Achievement</span>
+             </div>
+             <h3 className="text-2xl font-bold text-white mb-2">Smart India Hackathon</h3>
+             <p className="text-neutral-400 text-sm">
+               Top 6 Finalist in the Hardware Edition (2024). Built a real-time IoT monitoring system for industrial safety.
+             </p>
+           </div>
+           <div className="hidden md:flex h-24 w-24 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl items-center justify-center shrink-0 shadow-lg shadow-orange-900/20">
+              <span className="text-3xl font-bold text-white">Top 6</span>
+           </div>
+         </BentoCard>
+
       </div>
     </section>
   );
