@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import Avatar3D from './Avatar3D';
 
 const Hero = () => {
   const containerRef = useRef(null);
@@ -27,6 +28,9 @@ const Hero = () => {
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/20 rounded-full blur-[120px] mix-blend-screen" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 rounded-full blur-[120px] mix-blend-screen" />
       </div>
+
+      {/* 3D Avatar Background */}
+      <Avatar3D />
 
       <div className="z-10 text-center space-y-8 px-4 relative">
         {/* Available Badge */}
