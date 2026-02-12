@@ -1,41 +1,45 @@
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Float } from '@react-three/drei';
+import { Float, MeshTransmissionMaterial, Environment, Stars } from '@react-three/drei';
 
-const AnimatedShape = () => {
+const CrystalShape = () => {
   const meshRef = useRef(null);
 
   useFrame((state) => {
     if (meshRef.current) {
-      // Gentle rotation
       meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.2;
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.3;
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
-      <mesh ref={meshRef} scale={2.5}>
+    <Float speed={4} rotationIntensity={1} floatIntensity={2}>
+      {/* Main Glass Crystal */}
+      <mesh ref={meshRef} scale={3}>
         <icosahedronGeometry args={[1, 0]} />
-        <MeshDistortMaterial
+        <MeshTransmissionMaterial
+          backside
+          backsideThickness={5}
+          thickness={2}
+          roughness={0}
+          transmission={1}
+          ior={1.5}
+          chromaticAberration={0.1} // Premium rainbow edges
+          anisotropy={0.5}
           color="#ffffff"
-          attach="material"
-          distort={0.4}
-          speed={2}
-          roughness={0.2}
-          metalness={0.9}
-          wireframe={true}
         />
       </mesh>
-      {/* Inner solid core for depth */}
-      <mesh scale={1.5}>
-        <sphereGeometry args={[1, 32, 32]} />
+      
+      {/* Inner Glowing Core */}
+      <mesh scale={1.2}>
+        <icosahedronGeometry args={[1, 0]} />
         <meshStandardMaterial
-          color="#4ade80" // Emerald green to match "Available for hire" dot
+          color="#4ade80" // Vibrant emerald
+          emissive="#4ade80"
+          emissiveIntensity={2}
+          wireframe
           transparent
-          opacity={0.1}
-          roughness={0}
-          metalness={0.5}
+          opacity={0.5}
         />
       </mesh>
     </Float>
@@ -44,12 +48,22 @@ const AnimatedShape = () => {
 
 const Avatar3D = () => {
   return (
-    <div className="absolute inset-0 z-0 pointer-events-none opacity-40 md:opacity-60">
-      <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+    <div className="absolute inset-0 z-0 pointer-events-none opacity-80 mix-blend-screen">
+      <Canvas camera={{ position: [0, 0, 10], fov: 45 }} gl={{ alpha: true }}>
+        <color attach="background" args={['transparent']} />
+        
+        {/* Cinematic Lighting */}
         <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} color="#4ade80" intensity={2} />
-        <AnimatedShape />
+        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+        <pointLight position={[-10, -10, -10]} intensity={1} color="#4ade80" />
+        
+        {/* Environment for Reflections */}
+        <Environment preset="city" />
+        
+        {/* Space Dust */}
+        <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
+        
+        <CrystalShape />
       </Canvas>
     </div>
   );
